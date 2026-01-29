@@ -13,6 +13,14 @@
   
   if (process.env.DIALECT === 'dynamodb') {
     config.dialect = 'dynamo';
+  } else {
+    // Enable SSL for PostgreSQL connections (required by AWS RDS)
+    config.dialectOptions = {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    };
   }
   
   const sequelize = new Sequelize(
